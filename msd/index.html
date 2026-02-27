@@ -14,7 +14,6 @@
     justify-content: center;
     min-height: 100vh;
     overflow: hidden;
-    font-family: system-ui, sans-serif;
   }
 
   .wrapper {
@@ -29,103 +28,47 @@
     height: auto;
   }
 
-  /* ============================================
-     MONOGRAM — the big icon path (draw-in)
-     ============================================ */
   .monogram-stroke {
     fill: none;
-    stroke: url(#animGrad);
+    stroke: #007A73;
     stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-dasharray: 2000;
-    stroke-dashoffset: 2000;
-    animation: drawMonogram 3s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    opacity: 0;
   }
 
   .monogram-fill {
     opacity: 0;
-    animation: revealFill 0.8s ease-out 2.8s forwards;
+    transition: opacity 0.6s ease-out;
+  }
+  .monogram-fill.visible { opacity: 1; }
+
+  .connector-line {
+    fill: none;
+    stroke: #007A73;
+    stroke-width: 1.5;
+    stroke-linecap: round;
   }
 
-  /* ============================================
-     STUDIO BADGE BAR
-     ============================================ */
-  .studio-bar {
-    opacity: 0;
-    animation: revealFill 0.6s ease-out 3s forwards;
-  }
-
-  /* ============================================
-     TEXT: "MPulse" + "STUDIO" — all fade in together
-     ============================================ */
   .text-fade {
     opacity: 0;
-    animation: revealFill 0.6s ease-out 3s forwards;
+    transition: opacity 0.5s ease-out;
   }
+  .text-fade.visible { opacity: 1; }
 
-  /* ============================================
-     GLOW / ATMOSPHERE
-     ============================================ */
-  .glow-pulse {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(46, 139, 137, 0.06) 0%, transparent 70%);
-    pointer-events: none;
+  .studio-bar {
     opacity: 0;
-    animation: glowBreathe 4s ease-in-out 2.5s infinite;
+    transition: opacity 0.5s ease-out;
   }
+  .studio-bar.visible { opacity: 1; }
 
-  /* ============================================
-     KEYFRAMES
-     ============================================ */
-  @keyframes drawMonogram {
-    0% { stroke-dashoffset: 2000; }
-    100% { stroke-dashoffset: 0; }
-  }
-
-  @keyframes revealFill {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-
-  @keyframes glowBreathe {
-    0%, 100% { opacity: 0; transform: scale(0.9); }
-    50% { opacity: 1; transform: scale(1.1); }
-  }
-
-  /* Scanline effect at the start */
-  .scanline {
-    position: fixed;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, #2E8B89 30%, #4db8a4 50%, #2E8B89 70%, transparent 100%);
-    opacity: 0;
-    transform: scaleX(0);
-    animation: scan 1.2s ease-in-out 0s forwards;
-    pointer-events: none;
-    box-shadow: 0 0 20px rgba(46, 139, 137, 0.2), 0 0 60px rgba(46, 139, 137, 0.08);
-  }
-
-  @keyframes scan {
-    0% { opacity: 0; transform: scaleX(0); }
-    40% { opacity: 0.6; transform: scaleX(0.6); }
-    70% { opacity: 0.3; transform: scaleX(1); }
-    100% { opacity: 0; transform: scaleX(1.1); }
-  }
-
-  /* Replay */
   .replay {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background: rgba(46, 139, 137, 0.08);
-    border: 1px solid rgba(46, 139, 137, 0.2);
-    color: #2E8B89;
+    background: rgba(0, 122, 115, 0.08);
+    border: 1px solid rgba(0, 122, 115, 0.2);
+    color: #007A73;
     padding: 8px 18px;
     border-radius: 5px;
     font-size: 12px;
@@ -133,100 +76,191 @@
     text-transform: uppercase;
     cursor: pointer;
     opacity: 0;
-    animation: revealFill 0.4s ease-out 4.5s forwards;
-    transition: background 0.2s;
+    transition: opacity 0.4s ease-out, background 0.2s;
   }
-  .replay:hover { background: rgba(46, 139, 137, 0.15); }
+  .replay.visible { opacity: 1; }
+  .replay:hover { background: rgba(0, 122, 115, 0.15); }
 </style>
 </head>
 <body>
 
-<div class="scanline"></div>
-<div class="glow-pulse"></div>
-
 <div class="wrapper">
   <svg class="main-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" fill="none">
-    <defs>
-      <linearGradient id="animGrad" x1="5.5" x2="103.1" y1="125" y2="125" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#2E8B89" offset="0"/>
-        <stop stop-color="#2D908F" offset="1"/>
-      </linearGradient>
-      <linearGradient id="tealGrad" x1="5.5" x2="103.1" y1="125" y2="125" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#2E8B89" offset="0"/>
-        <stop stop-color="#2D908F" offset="1"/>
-      </linearGradient>
-      <linearGradient id="textGrad" x1="115.1" x2="243.7" y1="111" y2="111" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#2E8B89" offset="0"/>
-        <stop stop-color="#2D908F" offset="1"/>
-      </linearGradient>
-      <linearGradient id="barGrad" x1="114.2" x2="244.2" y1="141.1" y2="141.1" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#319591" offset="0"/>
-        <stop stop-color="#2B858A" offset="1"/>
-      </linearGradient>
-    </defs>
 
-    <!-- ===== MONOGRAM STROKE (draws in) ===== -->
-    <path class="monogram-stroke" d="m56.71 111c0.42-0.18 0.86-0.32 1.3-0.44-0.04-6.64 0.1-16.45 0.33-17.64 0.48-2.46 1.57-3.51 4.47-3.71 5.25-0.37 11.15-0.57 16.4 0.88 10.77 3.15 17.07 11.91 17.07 22.17 0 11.43-10.11 22.04-22.16 22.87-1.01 0.08-1.94 0.2-1.82-1.69 0.21-3.27 0.41-7.2-0.28-10.12-1.49-5.28-6.91-9.13-12.24-8.04-4.77 0.97-7.71 4-8.87 9.56-1.19 5.9-3.18 14.58-3.79 16.75-1.05-2.5-4.31-32.52-4.96-33.84-0.85-1.81-2.98-2.01-4.59-1.41-1.61 0.61-1.89 2.66-2.29 4.19-2.54 9.48-6.6 26.57-7.77 30.81-0.73-1.61-3.87-17.57-4.88-20.29-0.85-2.5-4.91-3.15-6.2-0.2-1.37 3.37-2.71 10.09-4.12 13.69-0.69 1.32-1.84 0.4-3.87 0.4-5.33 0-4.96 6.72-0.36 6.72 4.35 0 6.85 0.45 8.71-2.47 0.77-1.25 1.92-5.55 2.13-5.55 0.81 2.2 4.92 19.37 5.84 21.42 1.17 2.8 5.31 2.64 6.12-0.61 1.25-5.09 5.85-28.17 6.9-28.17 0.85 0 5.72 32.59 6.47 37.99 0.49 2.38 3.48 3.17 5.38 3.09 5.58-0.12 8.18-4.88 8.51-10.32 0.12-2.09-0.33-10.77-0.41-20.55-1.61 4.26-6.41 19.55-7.66 23.4-0.65 1.85-2.26 1.32-1.49-1.44 1.33-5.01 7.15-32.29 9.15-35.41 1.56-2.68 6.89-2.23 7.42 2.08 0.65 4.53-1.04 10.74 0.12 13.82 1.01 2.92 3.89 3.12 7.45 2.92 14.95-0.92 30.4-13.55 30.4-29.6 0-15.42-12.01-29.55-32.01-29.62-3.58 0-6.33 0-9.93 0.31-6.12 0.53-9.42 5.41-9.74 9.49-0.61 5.4-0.45 15.58-0.24 25.02 1.57-2.76 3.22-5.32 5.51-6.46z"/>
+    <!-- MONOGRAM STROKE -->
+    <path class="monogram-stroke" id="monoStroke" d="m5.78 132.8c-2.69-0.03-3.5 2.45-2.9 4.36 0.51 1.66 1.78 2.3 3.01 2.3h27.73c1.54 0 2.66-0.68 3.44-2.51l0.91-2.55 10.45 33.15c1 2.5 5.55 2.5 5.99-0.55l14.73-71.7 8.57 32.91c0.84 3.24 5.38 3.24 6.47 0.09l11.24-27.45v25.41c0 2.59 1.6 3.37 3.19 3.37 1.82 0 3.3-1.26 3.3-3.42v-39.4c0-2.44-1.48-3.05-3.14-3.05-1.45 0-2.46 0.61-3.16 2.4l-13.59 30.73-11.01-34.59c-0.84-2.3-4.9-2.7-5.44 0.45l-14.86 65.96-8.4-25.2c-1.09-2.85-5.05-2.64-5.99-0.1l-4.61 9.39h-25.93z"/>
 
-    <!-- ===== MONOGRAM FILL (fades in after stroke) ===== -->
-    <path class="monogram-fill" fill="url(#tealGrad)" d="m56.71 111c0.42-0.18 0.86-0.32 1.3-0.44-0.04-6.64 0.1-16.45 0.33-17.64 0.48-2.46 1.57-3.51 4.47-3.71 5.25-0.37 11.15-0.57 16.4 0.88 10.77 3.15 17.07 11.91 17.07 22.17 0 11.43-10.11 22.04-22.16 22.87-1.01 0.08-1.94 0.2-1.82-1.69 0.21-3.27 0.41-7.2-0.28-10.12-1.49-5.28-6.91-9.13-12.24-8.04-4.77 0.97-7.71 4-8.87 9.56-1.19 5.9-3.18 14.58-3.79 16.75-1.05-2.5-4.31-32.52-4.96-33.84-0.85-1.81-2.98-2.01-4.59-1.41-1.61 0.61-1.89 2.66-2.29 4.19-2.54 9.48-6.6 26.57-7.77 30.81-0.73-1.61-3.87-17.57-4.88-20.29-0.85-2.5-4.91-3.15-6.2-0.2-1.37 3.37-2.71 10.09-4.12 13.69-0.69 1.32-1.84 0.4-3.87 0.4-5.33 0-4.96 6.72-0.36 6.72 4.35 0 6.85 0.45 8.71-2.47 0.77-1.25 1.92-5.55 2.13-5.55 0.81 2.2 4.92 19.37 5.84 21.42 1.17 2.8 5.31 2.64 6.12-0.61 1.25-5.09 5.85-28.17 6.9-28.17 0.85 0 5.72 32.59 6.47 37.99 0.49 2.38 3.48 3.17 5.38 3.09 5.58-0.12 8.18-4.88 8.51-10.32 0.12-2.09-0.33-10.77-0.41-20.55-1.61 4.26-6.41 19.55-7.66 23.4-0.65 1.85-2.26 1.32-1.49-1.44 1.33-5.01 7.15-32.29 9.15-35.41 1.56-2.68 6.89-2.23 7.42 2.08 0.65 4.53-1.04 10.74 0.12 13.82 1.01 2.92 3.89 3.12 7.45 2.92 14.95-0.92 30.4-13.55 30.4-29.6 0-15.42-12.01-29.55-32.01-29.62-3.58 0-6.33 0-9.93 0.31-6.12 0.53-9.42 5.41-9.74 9.49-0.61 5.4-0.45 15.58-0.24 25.02 1.57-2.76 3.22-5.32 5.51-6.46z"/>
+    <!-- MONOGRAM FILL -->
+    <path class="monogram-fill" id="monoFill" fill="#007A73" d="m5.78 132.8c-2.69-0.03-3.5 2.45-2.9 4.36 0.51 1.66 1.78 2.3 3.01 2.3h27.73c1.54 0 2.66-0.68 3.44-2.51l0.91-2.55 10.45 33.15c1 2.5 5.55 2.5 5.99-0.55l14.73-71.7 8.57 32.91c0.84 3.24 5.38 3.24 6.47 0.09l11.24-27.45v25.41c0 2.59 1.6 3.37 3.19 3.37 1.82 0 3.3-1.26 3.3-3.42v-39.4c0-2.44-1.48-3.05-3.14-3.05-1.45 0-2.46 0.61-3.16 2.4l-13.59 30.73-11.01-34.59c-0.84-2.3-4.9-2.7-5.44 0.45l-14.86 65.96-8.4-25.2c-1.09-2.85-5.05-2.64-5.99-0.1l-4.61 9.39h-25.93z"/>
 
-    <!-- ===== "MPulse" TEXT (letter by letter) ===== -->
-    <!-- M -->
-    <path class="text-fade" fill="url(#textGrad)" d="m115.1 97.06h4.51l8.26 16.25 8.46-16.25h4.51v27.87h-4.56v-18.84l-6.78 12.4h-3.26l-6.78-12.4v18.84h-4.36v-27.87z"/>
+    <!-- CONNECTOR LINE -->
+    <line class="connector-line" id="connLine" x1="80.01" y1="134.9" x2="246.9" y2="134.9"/>
+
     <!-- P -->
-    <path class="text-fade" fill="url(#textGrad)" d="m147 97.06h10.77c7.53 0 9.83 4.35 9.83 9.15 0 5.55-3.46 9.44-9.58 9.44h-6.3v9.28h-4.72v-27.87zm4.72 4.01v10.61h5.7c4.06 0 5.46-2.55 5.46-5.35 0-2.84-1.36-5.26-5.42-5.26h-5.74z"/>
+    <path class="text-fade" fill="#007A73" d="m117.2 89.13v16.28h7.8c5.61 0 6.97-4.09 6.97-8.01 0-4.22-1.76-8.27-7.57-8.27h-7.2zm-6.49-5.35h14.56c9.76 0 13.45 6.55 13.45 13.28 0 7.75-4.26 14.4-13.18 14.4h-8.14v14.46h-6.69v-42.14z"/>
     <!-- u -->
-    <path class="text-fade" fill="url(#textGrad)" d="m170.9 105.4h4.43v10.3c0 4.84 1.49 6.2 4.21 6.2 2.98 0 5.19-2.01 5.19-7.1v-9.4h4.17v19.5h-3.38l-0.49-2.51c-1.53 2.09-3.58 3.01-6.26 3.01-5.13 0-7.87-2.81-7.87-9.9v-10.1z"/>
+    <path class="text-fade" fill="#007A73" d="m163.7 95.62h6.29v30.3h-6.29v-3.88c-1.82 3.02-4.66 4.54-8.73 4.54-8.03 0-11.13-5.38-11.13-11.53v-19.43h6.08v18.76c0 4.78 2.06 6.96 6.06 6.96 4.74 0 7.14-3.62 7.14-9.03l0.58-16.69z"/>
     <!-- l -->
-    <path class="text-fade" fill="url(#textGrad)" d="m194.5 96.9h4.42v22.27c0 2.01 0.41 2.76 1.74 2.76 0.62 0 1.15-0.16 1.68-0.37l0.37 3.37c-1.11 0.32-2.3 0.5-3.46 0.5-3.14 0-4.75-1.57-4.75-6.1v-22.43z"/>
+    <path class="text-fade" fill="#007A73" d="m177.4 83.71h6.42v33.46c0 3.15 0.37 3.96 2.47 3.96 0.87 0 1.71-0.17 2.25-0.4v5.38c-1.11 0.47-2.43 0.64-3.88 0.64-5.07 0-7.26-2.3-7.26-9.09v-33.95z"/>
     <!-- s -->
-    <path class="text-fade" fill="url(#textGrad)" d="m205.5 120.2c2.17 1.01 4.51 1.8 7.43 1.8 2.84 0 4.49-0.87 4.49-2.8 0-1.61-1.41-2.3-4.25-2.59-4.89-0.48-7.31-2.05-7.31-5.55 0-3.61 2.46-6.12 7.96-6.12 2.64 0 4.75 0.52 6.9 1.38l-0.57 3.85c-2.03-1.09-4.02-1.82-6.45-1.82-2.68 0-3.93 1.01-3.93 2.55 0 1.61 1.53 2.2 4.54 2.52 4.8 0.49 7.26 1.98 7.26 5.62 0 3.85-2.8 6.37-8.6 6.37-3.02 0-5.36-0.79-7.66-1.8l0.19-3.41z"/>
+    <path class="text-fade" fill="#007A73" d="m214 103.2c-3.26-2.02-6.65-3-10.05-3-3.16 0-5.32 1.25-5.32 3.9 0 3.59 4.44 3.25 8.47 3.69 5 0.54 8.2 2.69 8.2 9.01 0 6.65-5.68 9.67-11.96 9.67-3.56 0-7.22-0.81-10.25-2.22v-5.76c3.66 2.01 6.76 3.05 10.42 3.05 3.63 0 5.93-1.51 5.93-4.16 0-3.29-3-3.49-7.34-3.86-5.18-0.47-9.48-2.19-9.48-8.41 0-6.09 5.24-10.37 11.73-10.37 3.5 0 6.83 0.78 9.65 2.06v6.4z"/>
     <!-- e -->
-    <path class="text-fade" fill="url(#textGrad)" d="m235.2 104.6c6.74 0 8.52 5.36 8.52 9.54v2.09h-13.28c0.37 3.77 2.63 5.48 6.31 5.48 2.25 0 4.24-0.65 6.18-1.5l0.33 3.6c-2.21 1.05-4.38 1.59-7.06 1.59-6.66 0-9.84-4.12-9.84-10.5 0-5.75 2.98-10.3 8.84-10.3zm-0.25 3.7c-2.88 0-4.41 2.1-4.61 5.32h9.2c-0.12-2.86-1.23-5.32-4.59-5.32z"/>
+    <path class="text-fade" fill="#007A73" d="m228.1 109h12.85v-0.64c0-5.31-1.99-8.33-5.72-8.33-4.47 0-6.77 2.95-7.13 8.97zm-6.22 0.81c0-9.58 4.58-15.3 13.28-15.3 8.67 0 12.5 6.09 12.2 19.15h-19.26c0.4 5.08 2.87 7.65 8.38 7.65 3.93 0 7.22-1.05 10.58-2.84v5.48c-3.06 1.69-6.52 2.64-10.99 2.64-9.31 0-14.19-5.05-14.19-16.78z"/>
 
-    <!-- ===== STUDIO BAR ===== -->
-    <path class="studio-bar" fill="url(#barGrad)" d="m114.2 129.8h130v22.51h-130v-22.51z"/>
+    <!-- STUDIO BAR -->
+    <path class="studio-bar" id="studioBar" fill="#007A73" d="m80.01 134.9v35h166.9v-35h-166.9z"/>
 
-    <!-- ===== "STUDIO" LETTERS ===== -->
-    <path class="text-fade" fill="#FFFFFF" d="m127.6 146.1c1.13 0.72 2.62 1.23 4.48 1.23 2.46 0 3.42-1.07 3.42-2.48 0-1.22-0.92-1.88-3.3-2.29-2.8-0.51-4.6-1.51-4.6-4.06 0-2.28 1.49-4.48 5.29-4.48 1.93 0 3.18 0.47 4.14 0.95l-0.54 1.93c-1.17-0.68-2.19-1.01-3.64-1.01-2.3 0-3.22 1.05-3.22 2.31 0 1.42 1.09 1.97 3.3 2.44 3.1 0.69 4.59 1.76 4.59 4.05 0 2.52-1.7 4.53-5.4 4.53-1.98 0-3.55-0.57-4.76-1.32l0.24-1.8z"/>
-    <path class="text-fade" fill="#FFFFFF" d="m144 134.3h12.63v1.85h-5.35v12.67h-2.11v-12.67h-5.17v-1.85z"/>
-    <path class="text-fade" fill="#FFFFFF" d="m164.6 134.3h2.11v8.02c0 3.65 1.53 5.05 4.03 5.05s3.99-1.4 3.99-5.05v-8.02h2.11v8.02c0 4.93-2.42 6.9-6.1 6.9s-6.14-1.97-6.14-6.9v-8.02z"/>
-    <path class="text-fade" fill="#FFFFFF" d="m186.2 134.3h4.6c5.01 0 6.38 2.72 6.38 7.16 0 4.39-1.84 7.36-6.85 7.36h-4.13v-14.52zm2.11 1.77v11.03h2.12c3.9 0 4.74-2.37 4.74-5.56s-0.88-5.47-4.78-5.47h-2.08z"/>
-    <path class="text-fade" fill="#FFFFFF" d="m207.2 134.3h2.11v14.52h-2.11v-14.52z"/>
-    <path class="text-fade" fill="#FFFFFF" d="m225.1 134c5.01 0 6.3 3.44 6.3 7.56 0 4.16-1.29 7.64-6.3 7.64s-6.26-3.48-6.26-7.64c0-4.12 1.25-7.56 6.26-7.56zm0 1.85c-3.46 0-4.21 2.63-4.21 5.71 0 3.15 0.75 5.79 4.21 5.79 3.5 0 4.25-2.64 4.25-5.75 0-3.12-0.75-5.75-4.25-5.75z"/>
+    <!-- STUDIO LETTERS -->
+    <path class="text-fade" fill="#FFFFFF" d="m102.1 144.9c-2.37-1.28-4.26-1.68-6.01-1.68-2.3 0-3.96 0.98-3.96 3.41 0 4.69 11.33 1.6 11.33 10.69 0 5.18-3.83 7.17-7.86 7.17-2.23 0-4.6-0.63-6.76-1.82v-3.56c2.54 1.66 4.53 2.36 6.76 2.36 2.4 0 4.33-1.15 4.33-3.82 0-4.88-11.29-1.86-11.29-10.29 0-4.37 3.49-6.91 7.59-6.91 2.02 0 4.08 0.5 5.87 1.34v3.11z"/>
+    <path class="text-fade" fill="#FFFFFF" d="m130.8 143.6h-6.81v20.53h-3.53v-20.53h-6.62v-2.91h16.96v2.91z"/>
+    <path class="text-fade" fill="#FFFFFF" d="m145.7 140.7v13.26c0 4.98 1.6 7.56 5.12 7.56 4.03 0 5.45-2.78 5.45-7.72v-13.1h3.33v13.3c0 6.59-2.8 10.51-8.78 10.51-6.11 0-8.55-3.75-8.55-10.41v-13.4h3.43z"/>
+    <path class="text-fade" fill="#FFFFFF" d="m176.8 143.6v17.64h3.43c5.44 0 6.53-3.45 6.53-8.29 0-4.78-1.18-9.35-6.79-9.35h-3.17zm-3.46-2.95h7.02c7.32 0 9.28 5.62 9.28 11.84 0 6.4-2.37 11.6-9.08 11.6h-7.22v-23.44z"/>
+    <path class="text-fade" fill="#FFFFFF" d="m203 140.7h3.46v23.44h-3.46v-23.44z"/>
+    <path class="text-fade" fill="#FFFFFF" d="m222.9 152.3c0 5.6 1.05 9.25 5.72 9.25 4.64 0 5.73-3.85 5.73-9.12 0-5.12-1.12-9.06-5.73-9.06-4.5 0-5.72 3.88-5.72 8.93zm5.72-12.32c7.15 0 8.87 5.77 8.87 12.42 0 6.76-1.89 12.07-8.87 12.07s-8.9-5.28-8.9-12.07c0-6.65 1.96-12.42 8.9-12.42z"/>
   </svg>
 </div>
 
-<button class="replay" onclick="location.reload()">↻ Replay</button>
+<button class="replay" id="replayBtn" onclick="location.reload()">↻ Replay</button>
 
 <script>
-  // Calculate actual path length for precise dash animation
   window.addEventListener('DOMContentLoaded', () => {
-    const stroke = document.querySelector('.monogram-stroke');
-    if (stroke) {
-      const len = stroke.getTotalLength();
-      stroke.style.strokeDasharray = len;
-      stroke.style.strokeDashoffset = len;
-      // Update the animation to use real length
-      stroke.style.animation = 'none';
-      stroke.offsetHeight; // force reflow
-      stroke.style.setProperty('--path-len', len);
-      stroke.style.strokeDasharray = len;
-      stroke.style.strokeDashoffset = len;
-      stroke.style.animation = `drawReal 3s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards`;
+    const stroke = document.getElementById('monoStroke');
+    const fill = document.getElementById('monoFill');
+    const connLine = document.getElementById('connLine');
+    const studioBar = document.getElementById('studioBar');
+    const replayBtn = document.getElementById('replayBtn');
+    const textFades = document.querySelectorAll('.text-fade');
+
+    const totalLen = stroke.getTotalLength();
+    const lineLen = connLine.getTotalLength();
+    const ecgEnd = 0.50 * totalLen;
+
+    // Hide stroke, then reveal once dasharray is set
+    stroke.style.strokeDasharray = totalLen;
+    stroke.style.strokeDashoffset = totalLen;
+    stroke.style.opacity = 1;
+
+    // Hide connector line
+    connLine.style.strokeDasharray = lineLen;
+    connLine.style.strokeDashoffset = lineLen;
+
+    // ---- BUILD ECG SPEED MAP ----
+    // Sample the path Y-values to know where the spikes are.
+    // Spikes (big Y deviation from baseline ~132) = fast drawing
+    // Flat sections (near baseline) = slow, steady drawing
+    const BASELINE_Y = 132;
+    const SAMPLES = 200;
+    const ecgSampleLen = ecgEnd / SAMPLES;
+    const speeds = [];
+
+    for (let i = 0; i < SAMPLES; i++) {
+      const len = (i + 0.5) * ecgSampleLen;
+      const pt = stroke.getPointAtLength(len);
+      const deviation = Math.abs(pt.y - BASELINE_Y);
+      // More deviation from baseline = faster speed
+      // Flat (deviation ~0) → speed 0.3x
+      // Spike (deviation ~70+) → speed 3x
+      const speed = 0.3 + (deviation / 25) * 1.0;
+      speeds.push(Math.min(speed, 3.5));
+    }
+
+    // Normalize speeds so total time is predictable
+    const totalSpeed = speeds.reduce((a, b) => a + b, 0);
+    const normalizedSpeeds = speeds.map(s => s / totalSpeed);
+
+    // Build cumulative time map: for each sample, what fraction of total ECG time has elapsed
+    const cumTime = [0];
+    for (let i = 0; i < SAMPLES; i++) {
+      cumTime.push(cumTime[i] + normalizedSpeeds[i]);
+    }
+
+    // Function: given elapsed time fraction (0-1), return path length fraction drawn
+    function ecgTimeToLength(timeFrac) {
+      // Find which sample bracket we're in
+      for (let i = 0; i < SAMPLES; i++) {
+        if (timeFrac <= cumTime[i + 1]) {
+          const localFrac = (timeFrac - cumTime[i]) / (cumTime[i + 1] - cumTime[i]);
+          return ((i + localFrac) / SAMPLES) * ecgEnd;
+        }
+      }
+      return ecgEnd;
+    }
+
+    // ---- TIMING ----
+    const DELAY = 400;
+    const ECG_DUR = 2000;
+    const REST_DUR = 1200;
+    const FILL_DELAY = 150;
+    const LINE_DUR = 400;
+    const TEXT_DELAY = 150;
+
+    // ---- PHASE 1: Draw ECG with variable speed ----
+    setTimeout(() => {
+      const startTime = performance.now();
+
+      function animateECG(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / ECG_DUR, 1);
+
+        const drawn = ecgTimeToLength(progress);
+        stroke.style.strokeDashoffset = totalLen - drawn;
+
+        if (progress < 1) {
+          requestAnimationFrame(animateECG);
+        } else {
+          stroke.style.strokeDashoffset = totalLen - ecgEnd;
+          animateRest();
+        }
+      }
+
+      requestAnimationFrame(animateECG);
+    }, DELAY);
+
+    // ---- PHASE 2: Draw rest of monogram (50% → 100%) ----
+    function animateRest() {
+      const startTime = performance.now();
+      const restLen = totalLen - ecgEnd;
+
+      function animate(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / REST_DUR, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+
+        const drawn = ecgEnd + restLen * eased;
+        stroke.style.strokeDashoffset = totalLen - drawn;
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          stroke.style.strokeDashoffset = 0;
+          setTimeout(() => {
+            fill.classList.add('visible');
+            drawConnectorLine();
+          }, FILL_DELAY);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // ---- PHASE 3: Connector line ----
+    function drawConnectorLine() {
+      connLine.animate([
+        { strokeDashoffset: lineLen },
+        { strokeDashoffset: 0 }
+      ], {
+        duration: LINE_DUR,
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        fill: 'forwards'
+      }).onfinish = () => {
+        setTimeout(() => {
+          studioBar.classList.add('visible');
+          textFades.forEach(el => el.classList.add('visible'));
+          setTimeout(() => replayBtn.classList.add('visible'), 800);
+        }, TEXT_DELAY);
+      };
     }
   });
-
-  // Add dynamic keyframe using real path length
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes drawReal {
-      0% { stroke-dashoffset: var(--path-len, 2000); }
-      100% { stroke-dashoffset: 0; }
-    }
-  `;
-  document.head.appendChild(style);
 </script>
 
 </body>
